@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    background-color: #1a202c; /* Dark background for theme */
+    color: #e2e8f0; /* Light text for theme */
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.sidebar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: calc(100vh - 40px);
+    background-color: rgba(15, 23, 42, 0.75); /* Modern glassmorphism background */
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    color: #e2e8f0;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar h1 {
+    font-size: 1.5em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00f0ff 0%, #ff00ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.sidebar h2, .sidebar h3 {
+    color: #e2e8f0;
+    font-size: 1.1em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.input-group {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input-group input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: rgba(30, 41, 59, 0.6);
+    color: #e2e8f0;
+    font-size: 0.95em;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input[type="text"]:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    background-color: rgba(30, 41, 59, 0.8);
+}
+
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    z-index: 20;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 4px;
+}
+
+.autocomplete-results div {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+}
+
+.autocomplete-results div:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-results div:hover {
+    background-color: rgba(0, 240, 255, 0.15);
+    color: #ffffff;
+}
+
+.gradient-button {
+    background-image: linear-gradient(to right, #00f0ff, #0077ff);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.gradient-button:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.35);
+}
+
+.remove-stop {
+    background-image: linear-gradient(to right, #ef4444, #b91c1c) !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2) !important;
+    padding: 8px 12px;
+    font-size: 0.8em;
+    margin-top: 8px;
+}
+
+.remove-stop:hover {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35) !important;
+}
+
+#route-details {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#route-details p, #route-details li {
+    font-size: 0.9em;
+    color: #cbd5e1;
+    margin-bottom: 5px;
+}
+
+#instructions-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+#instructions-list li {
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+#instructions-list li:last-child {
+    border-bottom: none;
+}
+
+/* Hide Leaflet Routing Machine directions table */
+.leaflet-routing-container.leaflet-control {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+        top: 20px;
+        max-height: 50vh;
+        padding: 15px;
+    }
+}
