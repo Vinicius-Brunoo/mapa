@@ -163,6 +163,30 @@ async function handleAddressInput(event) {
         return;
     }
 
+    // Check if it's a direct coordinate entry (lat, lon)
+    const coordRegex = /^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/;
+    const coordMatch = query.match(coordRegex);
+    if (coordMatch) {
+        const lat = parseFloat(coordMatch[1]);
+        const lon = parseFloat(coordMatch[3]);
+        autocompleteResultsDiv.innerHTML = '';
+        const div = document.createElement('div');
+        div.textContent = `📍 Usar Coordenadas: ${lat}, ${lon}`;
+        div.style.fontWeight = '600';
+        div.style.color = '#00f0ff';
+        div.style.padding = '8px 12px';
+        div.style.cursor = 'pointer';
+        div.addEventListener('click', () => {
+            inputElement.value = `${lat}, ${lon}`;
+            autocompleteResultsDiv.style.display = 'none';
+            inputElement.dataset.lat = lat;
+            inputElement.dataset.lon = lon;
+        });
+        autocompleteResultsDiv.appendChild(div);
+        autocompleteResultsDiv.style.display = 'block';
+        return;
+    }
+
     // Check if it's a CEP
     const cepRegex = /^\d{5}-?\d{3}$/;
     if (cepRegex.test(query)) {
@@ -221,6 +245,15 @@ addStopButton.addEventListener('click', () => {
 });
 
 async function getCoordinates(address, inputElement) {
+    // Check if the input is already in "lat, lon" format
+    const coordRegex = /^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/;
+    const coordMatch = address.match(coordRegex);
+    if (coordMatch) {
+        const lat = parseFloat(coordMatch[1]);
+        const lon = parseFloat(coordMatch[3]);
+        return [lat, lon];
+    }
+
     // Try direct search
     let results = await searchAddress(address, inputElement);
     if (results && results.length > 0) {
